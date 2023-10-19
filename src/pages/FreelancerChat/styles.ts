@@ -46,7 +46,7 @@ export const FreelancerChat = styled(Window)<IFreelancerChat>`
   }
 
   @media screen and (max-width: ${responsiveMobile}) {
-    padding-bottom: 60px;
+    padding-bottom: 80px;
   }
 `
 
