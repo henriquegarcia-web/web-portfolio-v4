@@ -1,5 +1,5 @@
 import styled, { keyframes } from 'styled-components'
-import { Window } from '@/utils/styles/globals'
+import { Window, responsiveMobile } from '@/utils/styles/globals'
 
 interface IFreelancerChat {
   color: string
@@ -43,6 +43,10 @@ export const FreelancerChat = styled(Window)<IFreelancerChat>`
     -webkit-text-fill-color: ${({ color }) => color};
     transition: background-color 5000s ease-in-out 0s;
     box-shadow: inset 0 0 20px 20px ${({ background }) => background};
+  }
+
+  @media screen and (max-width: ${responsiveMobile}) {
+    padding-bottom: 60px;
   }
 `
 
