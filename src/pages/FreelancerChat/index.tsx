@@ -12,7 +12,7 @@ import { handleSubmitChatData } from '@/firebase/leads'
 type Message = {
   questionId: number
   questionLabel: string
-  questionAnswer: string
+  questionAnswer?: string
   isFinalQuestion: boolean
 }
 
@@ -34,22 +34,40 @@ const FreelancerChat = () => {
   const [servicesSearch, setServicesSearch] = useState('')
 
   const [chatEnded, setChatEnded] = useState(false)
+  const [chatSended, setChatSended] = useState(false)
   const [chatLoading, setChatLoading] = useState(false)
 
   const [messages, setMessages] = useState([mockQuestions[0]])
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
 
   const resetChat = () => {
-    setMessages([mockQuestions[0]])
+    // console.log(mockQuestions[0])
+
+    const initalQuestionArray = [mockQuestions[0]]
+
+    console.log(initalQuestionArray)
+
+    setMessages(initalQuestionArray)
     setChatLoading(false)
     setChatEnded(false)
+    setCurrentQuestionIndex(0)
   }
+
+  // useEffect(() => {
+  //   console.log(mockQuestions[0])
+  // }, [mockQuestions])
 
   const handleAnswerChange = (message: string) => {
     setChatLoading(true)
 
     const updatedMessages = [...messages]
-    updatedMessages[currentQuestionIndex].questionAnswer = message
+    const currentQuestion = mockQuestions[currentQuestionIndex]
+
+    updatedMessages[currentQuestionIndex] = {
+      ...currentQuestion,
+      questionAnswer: message
+    }
+
     setMessages(updatedMessages)
 
     if (currentQuestionIndex < mockQuestions.length - 1) {
@@ -61,18 +79,17 @@ const FreelancerChat = () => {
         setChatLoading(false)
       }, 1000)
     } else {
-      updatedMessages.push({
-        questionId: 10,
-        questionLabel:
-          'Obrigado por preencher esse formulário! Clique em "Enviar" para enviar sua solicitação',
-        questionAnswer: '',
-        isFinalQuestion: false
-      })
-
       setChatEnded(true)
-
       setChatLoading(false)
     }
+
+    // updatedMessages.push({
+    //   questionId: 10,
+    //   questionLabel:
+    //     'Obrigado por preencher esse formulário! Clique em "Enviar" para enviar sua solicitação',
+    //   questionAnswer: '',
+    //   isFinalQuestion: false
+    // })
   }
 
   const { control, handleSubmit, reset, formState } = useForm<ChatForm>()
@@ -100,12 +117,14 @@ const FreelancerChat = () => {
   const handleSubmitChat = async () => {
     setChatLoading(true)
 
-    const fomattedQuestions = formatQuestions(messages)
-    const submitChatResponse = await handleSubmitChatData(fomattedQuestions)
+    console.log(messages)
 
-    if (submitChatResponse) {
-      resetChat()
-    }
+    // const fomattedQuestions = formatQuestions(messages)
+    // const submitChatResponse = await handleSubmitChatData(fomattedQuestions)
+
+    // if (submitChatResponse) {
+    //   setChatSended(true)
+    // }
 
     setChatLoading(false)
   }
@@ -189,9 +208,10 @@ const FreelancerChat = () => {
                 return (
                   <S.MessageWrapper key={message.questionId}>
                     <S.MessageBot>{message.questionLabel}</S.MessageBot>
-                    {message.questionAnswer !== '' && (
-                      <S.MessageUser>{message.questionAnswer}</S.MessageUser>
-                    )}
+                    {message.questionAnswer &&
+                      message.questionAnswer !== '' && (
+                        <S.MessageUser>{message.questionAnswer}</S.MessageUser>
+                      )}
                   </S.MessageWrapper>
                 )
               })}
@@ -232,6 +252,18 @@ const FreelancerChat = () => {
                     height: 40
                   }}
                 />
+              ) : chatSended ? (
+                <Button
+                  type="primary"
+                  onClick={resetChat}
+                  loading={chatLoading}
+                  style={{
+                    width: 100,
+                    height: 40
+                  }}
+                >
+                  Reiniciar
+                </Button>
               ) : (
                 <Button
                   type="primary"
@@ -311,47 +343,40 @@ const mockQuestions: Message[] = [
   {
     questionId: 0,
     questionLabel: 'Qual é o seu nome?',
-    questionAnswer: '',
     isFinalQuestion: false
   },
   {
     questionId: 1,
     questionLabel:
       'Você tem algum número de telefone ou outra forma de contato preferencial, como E-mail ou WhatsApp?',
-    questionAnswer: '',
     isFinalQuestion: false
   },
   {
     questionId: 2,
     questionLabel:
       'Qual tipo de projeto você está interessado em? Website, Aplicativo e/ou Sistema?',
-    questionAnswer: '',
     isFinalQuestion: false
   },
   {
     questionId: 3,
     questionLabel: 'Descreva brevemente o seu projeto e suas necessidades.',
-    questionAnswer: '',
     isFinalQuestion: false
   },
   {
     questionId: 4,
     questionLabel: 'Qual é o seu orçamento para este projeto?',
-    questionAnswer: '',
     isFinalQuestion: false
   },
   {
     questionId: 5,
     questionLabel:
       'Qual é o prazo estimado para a conclusão deste projeto? Há uma data específica que você gostaria de cumprir?',
-    questionAnswer: '',
     isFinalQuestion: false
   },
   {
     questionId: 6,
     questionLabel:
       'Você tem algum site, sistema ou aplicativo de referência que gostaria que seu projeto se assemelhasse?',
-    questionAnswer: '',
     isFinalQuestion: true
   }
   // {

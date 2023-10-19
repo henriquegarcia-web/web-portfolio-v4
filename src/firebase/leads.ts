@@ -10,10 +10,10 @@ const handleSubmitChatData = async (chatData: IChatData): Promise<boolean> => {
   try {
     const adminAccountsRef = firebase.database().ref('leadsProjects')
 
-    await adminAccountsRef.set(chatData)
+    await adminAccountsRef.push(chatData)
 
     message.open({
-      type: 'error',
+      type: 'success',
       content: 'Solicitação de projeto enviada com sucesso!'
     })
 

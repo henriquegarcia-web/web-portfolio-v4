@@ -173,9 +173,9 @@ export const MessageBot = styled(Message)`
   position: relative;
   display: flex;
 
-  background-color: rgba(255, 122, 0, 0.15);
-  border: 1px solid rgba(255, 122, 0, 1);
-  color: rgba(255, 122, 0, 1);
+  background-color: rgba(255, 176, 0, 0.15);
+  border: 1px solid rgba(255, 176, 0, 1);
+  color: rgba(255, 176, 0, 1);
 
   animation: ${slideInFromLeft} 0.5s ease-in-out;
 
@@ -197,9 +197,9 @@ export const MessageUser = styled(Message)`
   display: flex;
   margin-left: auto;
 
-  background-color: rgba(3, 169, 244, 0.15);
-  border: 1px solid rgba(3, 169, 244, 1);
-  color: rgba(3, 169, 244, 1);
+  background-color: rgba(98, 139, 221, 0.15);
+  border: 1px solid rgba(98, 139, 221, 1);
+  color: rgba(98, 139, 221, 1);
 
   animation: ${slideInFromRight} 0.5s ease-in-out;
 
