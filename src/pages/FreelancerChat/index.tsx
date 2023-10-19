@@ -13,7 +13,7 @@ type Message = {
   questionId: number
   questionLabel: string
   questionAnswer?: string
-  isFinalQuestion: boolean
+  questionType: string
 }
 
 interface IService {
@@ -25,6 +25,16 @@ interface IService {
 
 interface ChatForm {
   userResponse: string
+}
+
+interface ISubmitForm {
+  questionName: string
+  questionContact: string
+  questionInterest: string
+  questionNeeds: string
+  questionBudget: string
+  questionTerm: string
+  questionReference: string
 }
 
 const FreelancerChat = () => {
@@ -41,21 +51,13 @@ const FreelancerChat = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
 
   const resetChat = () => {
-    // console.log(mockQuestions[0])
-
     const initalQuestionArray = [mockQuestions[0]]
-
-    console.log(initalQuestionArray)
 
     setMessages(initalQuestionArray)
     setChatLoading(false)
     setChatEnded(false)
     setCurrentQuestionIndex(0)
   }
-
-  // useEffect(() => {
-  //   console.log(mockQuestions[0])
-  // }, [mockQuestions])
 
   const handleAnswerChange = (message: string) => {
     setChatLoading(true)
@@ -77,19 +79,21 @@ const FreelancerChat = () => {
         setMessages(updatedMessages)
 
         setChatLoading(false)
-      }, 1000)
+      }, 500)
     } else {
-      setChatEnded(true)
-      setChatLoading(false)
-    }
+      setTimeout(() => {
+        updatedMessages.push({
+          questionId: 10,
+          questionLabel:
+            'Obrigado por preencher esse formulário! Clique em "Enviar" para enviar sua solicitação',
+          questionType: 'message'
+        })
 
-    // updatedMessages.push({
-    //   questionId: 10,
-    //   questionLabel:
-    //     'Obrigado por preencher esse formulário! Clique em "Enviar" para enviar sua solicitação',
-    //   questionAnswer: '',
-    //   isFinalQuestion: false
-    // })
+        setMessages(updatedMessages)
+        setChatEnded(true)
+        setChatLoading(false)
+      }, 500)
+    }
   }
 
   const { control, handleSubmit, reset, formState } = useForm<ChatForm>()
@@ -104,27 +108,26 @@ const FreelancerChat = () => {
   // ---------------------------------------------------------
 
   function formatQuestions(questions: Message[]) {
-    questions.pop()
+    const formattedData: any = {}
 
-    const formattedQuestions = questions.map((question) => {
-      const { isFinalQuestion, questionId, ...formattedQuestion } = question
-      return formattedQuestion
-    })
+    for (const item of questions) {
+      if (item.questionType !== 'message') {
+        formattedData[item.questionType] = item.questionAnswer
+      }
+    }
 
-    return formattedQuestions
+    return formattedData
   }
 
   const handleSubmitChat = async () => {
     setChatLoading(true)
 
-    console.log(messages)
+    const fomattedQuestions = formatQuestions(messages)
+    const submitChatResponse = await handleSubmitChatData(fomattedQuestions)
 
-    // const fomattedQuestions = formatQuestions(messages)
-    // const submitChatResponse = await handleSubmitChatData(fomattedQuestions)
-
-    // if (submitChatResponse) {
-    //   setChatSended(true)
-    // }
+    if (submitChatResponse) {
+      setChatSended(true)
+    }
 
     setChatLoading(false)
   }
@@ -193,7 +196,7 @@ const FreelancerChat = () => {
               <S.UserInfosMedias>
                 <Button
                   icon={<LiaWhatsapp />}
-                  href="https://www.google.com"
+                  href="https://whatsa.me/5584998147860"
                   target="_blank"
                 />
               </S.UserInfosMedias>
@@ -205,15 +208,25 @@ const FreelancerChat = () => {
           <S.ChatMessagesContainer>
             <S.ChatMessagesWrapper>
               {messages.map((message) => {
-                return (
-                  <S.MessageWrapper key={message.questionId}>
-                    <S.MessageBot>{message.questionLabel}</S.MessageBot>
-                    {message.questionAnswer &&
-                      message.questionAnswer !== '' && (
-                        <S.MessageUser>{message.questionAnswer}</S.MessageUser>
-                      )}
-                  </S.MessageWrapper>
-                )
+                if (message.questionType === 'message') {
+                  return (
+                    <S.MessageWrapper key={message.questionId}>
+                      <S.MessageBot>{message.questionLabel}</S.MessageBot>
+                    </S.MessageWrapper>
+                  )
+                } else {
+                  return (
+                    <S.MessageWrapper key={message.questionId}>
+                      <S.MessageBot>{message.questionLabel}</S.MessageBot>
+                      {message.questionAnswer &&
+                        message.questionAnswer !== '' && (
+                          <S.MessageUser>
+                            {message.questionAnswer}
+                          </S.MessageUser>
+                        )}
+                    </S.MessageWrapper>
+                  )
+                }
               })}
             </S.ChatMessagesWrapper>
           </S.ChatMessagesContainer>
@@ -252,33 +265,41 @@ const FreelancerChat = () => {
                     height: 40
                   }}
                 />
-              ) : chatSended ? (
-                <Button
-                  type="primary"
-                  onClick={resetChat}
-                  loading={chatLoading}
-                  style={{
-                    width: 100,
-                    height: 40
-                  }}
-                >
-                  Reiniciar
-                </Button>
               ) : (
-                <Button
-                  type="primary"
-                  onClick={handleSubmitChat}
-                  loading={chatLoading}
-                  style={{
-                    width: 100,
-                    height: 40
-                  }}
-                >
-                  Enviar <IoSendOutline />
-                </Button>
+                <>
+                  {chatSended ? (
+                    <Button
+                      type="primary"
+                      onClick={resetChat}
+                      loading={chatLoading}
+                      style={{
+                        width: 100,
+                        height: 40
+                      }}
+                    >
+                      Reiniciar
+                    </Button>
+                  ) : (
+                    <Button
+                      type="primary"
+                      onClick={handleSubmitChat}
+                      loading={chatLoading}
+                      style={{
+                        width: 100,
+                        height: 40
+                      }}
+                    >
+                      Enviar <IoSendOutline />
+                    </Button>
+                  )}
+                </>
               )}
             </S.ChatFooterSubmit>
           </S.ChatFooter>
+
+          <S.ChatBackground>
+            <img src="/chat_bg.png" alt="" />
+          </S.ChatBackground>
         </S.Chat>
       </S.FreelancerChat>
 
@@ -341,50 +362,44 @@ export default FreelancerChat
 
 const mockQuestions: Message[] = [
   {
-    questionId: 0,
-    questionLabel: 'Qual é o seu nome?',
-    isFinalQuestion: false
-  },
-  {
     questionId: 1,
-    questionLabel:
-      'Você tem algum número de telefone ou outra forma de contato preferencial, como E-mail ou WhatsApp?',
-    isFinalQuestion: false
+    questionLabel: 'Qual é o seu nome?',
+    questionType: 'questionName'
   },
   {
     questionId: 2,
     questionLabel:
-      'Qual tipo de projeto você está interessado em? Website, Aplicativo e/ou Sistema?',
-    isFinalQuestion: false
+      'Você tem algum número de telefone ou outra forma de contato preferencial, como E-mail ou WhatsApp?',
+    questionType: 'questionContact'
   },
   {
     questionId: 3,
-    questionLabel: 'Descreva brevemente o seu projeto e suas necessidades.',
-    isFinalQuestion: false
+    questionLabel:
+      'Qual tipo de projeto você está interessado em? Website, Aplicativo e/ou Sistema?',
+    questionType: 'questionInterest'
   },
   {
     questionId: 4,
-    questionLabel: 'Qual é o seu orçamento para este projeto?',
-    isFinalQuestion: false
+    questionLabel: 'Descreva brevemente o seu projeto e suas necessidades.',
+    questionType: 'questionNeeds'
   },
   {
     questionId: 5,
-    questionLabel:
-      'Qual é o prazo estimado para a conclusão deste projeto? Há uma data específica que você gostaria de cumprir?',
-    isFinalQuestion: false
+    questionLabel: 'Qual é o seu orçamento para este projeto?',
+    questionType: 'questionBudget'
   },
   {
     questionId: 6,
     questionLabel:
+      'Qual é o prazo estimado para a conclusão deste projeto? Há uma data específica que você gostaria de cumprir?',
+    questionType: 'questionTerm'
+  },
+  {
+    questionId: 7,
+    questionLabel:
       'Você tem algum site, sistema ou aplicativo de referência que gostaria que seu projeto se assemelhasse?',
-    isFinalQuestion: true
+    questionType: 'questionReference'
   }
-  // {
-  //   questionId: 7,
-  //   questionLabel: '',
-  //   questionAnswer: '',
-  //   isFinalQuestion: true
-  // },
 ]
 
 const mockServices: IService[] = [

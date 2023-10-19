@@ -47,6 +47,7 @@ export const FreelancerChat = styled(Window)<IFreelancerChat>`
 `
 
 export const Chat = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -56,7 +57,23 @@ export const Chat = styled.div`
   overflow: hidden;
 `
 
+export const ChatBackground = styled.div`
+  z-index: 5;
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.012;
+  }
+`
+
 export const ChatHeader = styled.div`
+  z-index: 10;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -117,6 +134,7 @@ export const ChatHeaderMenu = styled.div`
 `
 
 export const ChatMessagesContainer = styled.div`
+  z-index: 10;
   display: flex;
   flex-direction: column-reverse;
   align-items: flex-start;
@@ -217,6 +235,7 @@ export const MessageUser = styled(Message)`
 `
 
 export const ChatFooter = styled.form`
+  z-index: 10;
   display: flex;
   column-gap: 8px;
   width: 100%;
