@@ -12,8 +12,13 @@ const AppRoutes = () => {
       <Routes>
         {/* =============================================================== */}
 
-        <Route path="/" element={<AdvocacyLanding />} />
-        <Route path="/*" element={<Navigate to="/" />} />
+        <Route path="/website-de-advocacia" element={<AdvocacyLanding />} />
+
+        <Route path="/" element={<Navigate to="/website-de-advocacia" />} />
+        <Route path="/*" element={<Navigate to="/website-de-advocacia" />} />
+
+        {/* <Route path="/" element={<AdvocacyLanding />} />
+        <Route path="/*" element={<Navigate to="/" />} /> */}
 
         {/* =============================================================== */}
       </Routes>

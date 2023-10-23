@@ -19,6 +19,8 @@ import {
   mockPortfolio
 } from '@/data/mockedData'
 
+import { handleSubmitContactData } from '@/firebase/leads'
+
 const AdvocacyLanding = () => {
   const { token } = theme.useToken()
 
@@ -48,8 +50,8 @@ export default AdvocacyLanding
 
 interface ISubmitContactData {
   userName: string
-  userPhone: string
   userEmail: string
+  userPhone: string
 }
 
 const HeroBanner = () => {
@@ -62,11 +64,14 @@ const HeroBanner = () => {
 
   const { isValid } = formState
 
-  const handleSubmitChatMessage = async (data: ISubmitContactData) => {
+  const handleSubmitContact = async (data: ISubmitContactData) => {
     setContactLoading(true)
-    console.log(data)
 
-    // reset()
+    const contactResponse = await handleSubmitContactData(data)
+
+    if (contactResponse) {
+      reset()
+    }
     setContactLoading(false)
   }
 
@@ -138,7 +143,7 @@ const HeroBanner = () => {
           <S.HeroBannerFormContainer>
             <S.HeroBannerForm
               layout="vertical"
-              onFinish={handleSubmit(handleSubmitChatMessage)}
+              onFinish={handleSubmit(handleSubmitContact)}
             >
               <S.HeroBannerFormHeader>
                 Fale conosco e deixe-nos ajudá-lo a alcançar seus objetivos
@@ -163,7 +168,7 @@ const HeroBanner = () => {
                 </Form.Item>
                 <Form.Item label="E-mail">
                   <Controller
-                    name="userPhone"
+                    name="userEmail"
                     control={control}
                     rules={{ required: 'Este campo é obrigatório' }}
                     render={({ field }) => (

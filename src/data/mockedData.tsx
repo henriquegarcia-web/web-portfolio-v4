@@ -106,19 +106,19 @@ const defaultPlanBenefits = [
     planBenefitLabel: 'Design Responsivo'
   },
   {
-    planBenefitId: 'default_benefit_0',
+    planBenefitId: 'default_benefit_02',
     planBenefitLabel: 'Hospedagem Segura'
   },
   {
-    planBenefitId: 'default_benefit_0',
+    planBenefitId: 'default_benefit_03',
     planBenefitLabel: 'Otimização Avançada de SEO'
   },
   {
-    planBenefitId: 'default_benefit_0',
+    planBenefitId: 'default_benefit_04',
     planBenefitLabel: 'Formulário de Contato'
   },
   {
-    planBenefitId: 'default_benefit_0',
+    planBenefitId: 'default_benefit_05',
     planBenefitLabel: 'Botão de Fale pelo WhatsApp'
   }
   // {

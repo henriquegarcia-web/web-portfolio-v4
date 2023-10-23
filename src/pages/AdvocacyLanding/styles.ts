@@ -1,3 +1,8 @@
+import {
+  responsiveDesktop,
+  responsiveMobile,
+  responsiveTablet
+} from '@/utils/styles/globals'
 import { Form } from 'antd'
 import styled from 'styled-components'
 
@@ -14,6 +19,10 @@ export const AdvocacyLandingHeader = styled.div`
   width: 100%;
   height: 50px;
   padding: 0 40px;
+
+  @media screen and (max-width: ${responsiveTablet}) {
+    padding: 0 20px;
+  }
 `
 
 export const HeaderLogo = styled.div`
@@ -35,7 +44,9 @@ export const HeroBanner = styled.div`
   height: fit-content;
   padding: 60px 40px;
 
-  /* border: 1px solid blue; */
+  @media screen and (max-width: ${responsiveTablet}) {
+    padding: 40px 20px;
+  }
 `
 
 export const HeroBannerWrapper = styled.div`
@@ -45,6 +56,11 @@ export const HeroBannerWrapper = styled.div`
   max-width: 1000px;
 
   /* border: 1px solid red; */
+
+  @media screen and (max-width: ${responsiveTablet}) {
+    flex-direction: column;
+    row-gap: 60px;
+  }
 `
 
 // ------------------------------------------ HERO CONTENT
@@ -55,6 +71,10 @@ export const HeroBannerContent = styled.div`
   justify-content: center;
   row-gap: 25px;
   width: 60%;
+
+  @media screen and (max-width: ${responsiveTablet}) {
+    width: 100%;
+  }
 `
 
 export const HeroBannerContentHeader = styled.div`
@@ -94,6 +114,11 @@ export const HeroBannerContentCta = styled.div`
 export const HeroBannerFormContainer = styled.div`
   display: flex;
   width: 40%;
+
+  @media screen and (max-width: ${responsiveTablet}) {
+    justify-content: center;
+    width: 100%;
+  }
 `
 
 export const HeroBannerForm = styled(Form)`
@@ -107,6 +132,11 @@ export const HeroBannerForm = styled(Form)`
 
   .ant-form-item {
     margin-bottom: 0px;
+  }
+
+  @media screen and (max-width: ${responsiveTablet}) {
+    width: 100%;
+    max-width: 460px;
   }
 `
 
@@ -141,6 +171,10 @@ export const Banner = styled.div`
   justify-content: center;
   width: 100%;
   padding: 60px 40px;
+
+  @media screen and (max-width: ${responsiveTablet}) {
+    padding: 40px 20px;
+  }
 `
 
 export const BannerWrapper = styled.div`
@@ -178,6 +212,14 @@ export const Benefit = styled.div`
   border-radius: 8px;
 
   width: calc((100% / 3) - (40px / 3));
+
+  @media screen and (max-width: ${responsiveTablet}) {
+    width: calc((100% / 2) - (20px / 2));
+  }
+
+  @media screen and (max-width: ${responsiveMobile}) {
+    width: 100%;
+  }
 `
 
 export const BenefitHeader = styled.div`
@@ -200,7 +242,7 @@ export const BenefitContent = styled.div`
 
   b {
     font-size: 16px;
-    line-height: 16px;
+    line-height: 21px;
     font-weight: 600;
 
     /* color: #628bdd; */
@@ -216,7 +258,7 @@ export const BenefitContent = styled.div`
   }
 `
 
-// ================================================= BENEFITS BANNER
+// ================================================= PORTFOLIO BANNER
 
 export const PortfolioWrapper = styled.div`
   display: flex;
@@ -232,6 +274,14 @@ export const Portfolio = styled.div`
   border-radius: 8px;
 
   width: calc((100% / 3) - (40px / 3));
+
+  @media screen and (max-width: ${responsiveTablet}) {
+    width: calc((100% / 2) - (20px / 2));
+  }
+
+  @media screen and (max-width: ${responsiveMobile}) {
+    width: 100%;
+  }
 `
 
 export const PortfolioImage = styled.img`
@@ -248,6 +298,10 @@ export const PlansWrapper = styled.div`
   flex-wrap: wrap;
   gap: 20px;
   width: 100%;
+
+  @media screen and (max-width: ${responsiveDesktop}) {
+    flex-direction: column;
+  }
 `
 
 export const Plan = styled.div`
@@ -259,6 +313,10 @@ export const Plan = styled.div`
   border-radius: 8px;
 
   width: calc((100% / 3) - (40px / 3));
+
+  @media screen and (max-width: ${responsiveDesktop}) {
+    width: 100%;
+  }
 `
 
 export const PlanName = styled.div`

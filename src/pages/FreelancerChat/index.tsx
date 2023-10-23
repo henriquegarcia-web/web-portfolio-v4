@@ -7,7 +7,7 @@ import { LiaWhatsapp, LiaGithub, LiaBehance } from 'react-icons/lia'
 import { Button, Drawer, Input, theme } from 'antd'
 
 import { Controller, useForm } from 'react-hook-form'
-import { handleSubmitChatData } from '@/firebase/leads'
+// import { handleSubmitChatData } from '@/firebase/leads'
 
 type Message = {
   questionId: number
@@ -123,11 +123,11 @@ const FreelancerChat = () => {
     setChatLoading(true)
 
     const fomattedQuestions = formatQuestions(messages)
-    const submitChatResponse = await handleSubmitChatData(fomattedQuestions)
+    // const submitChatResponse = await handleSubmitChatData(fomattedQuestions)
 
-    if (submitChatResponse) {
-      setChatSended(true)
-    }
+    // if (submitChatResponse) {
+    //   setChatSended(true)
+    // }
 
     setChatLoading(false)
   }
