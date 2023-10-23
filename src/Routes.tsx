@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
-import { FreelancerChat } from '@/pages'
+import { FreelancerChat, AdvocacyLanding } from '@/pages'
 
 import { useAuth } from './contexts/AuthContext'
 
@@ -12,7 +12,7 @@ const AppRoutes = () => {
       <Routes>
         {/* =============================================================== */}
 
-        <Route path="/" element={<FreelancerChat />} />
+        <Route path="/" element={<AdvocacyLanding />} />
         <Route path="/*" element={<Navigate to="/" />} />
 
         {/* =============================================================== */}

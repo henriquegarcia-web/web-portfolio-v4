@@ -38,37 +38,39 @@ const GlobalStyle = createGlobalStyle`
     user-select: none;
 
     -webkit-tap-highlight-color: transparent !important;
+
+    scroll-behavior: smooth;
   }
 
-  scroll-behavior: smooth;
+  
 
   html {
     &::-webkit-scrollbar {
-      width: 6px;
+      width: 4px;
       z-index: 1000;
     }
 
     &::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.1);
+      background: #282F3F;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #ff7a00;
+      background: #3C70E2;
     }
   }
 
   body {
     &::-webkit-scrollbar {
-      width: 6px;
+      width: 4px;
       z-index: 1000;
     }
 
     &::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.1);
+      background: #282F3F;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #ff7a00;
+      background: #3C70E2;
     }
   }
 
@@ -86,12 +88,12 @@ const GlobalStyle = createGlobalStyle`
     }
 
     &::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.1);
+      background: #282F3F;
       border-radius: 10px;
     }
 
     &::-webkit-scrollbar-thumb {
-      background: #ff7a00;
+      background: #3C70E2;
       border-radius: 10px;
     }
   }
@@ -116,7 +118,7 @@ export const Window = styled.main`
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #ff7a00;
+    background: #3c70e2;
     border-radius: 10px;
   }
 `
